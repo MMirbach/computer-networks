@@ -1,6 +1,9 @@
 #!python3
 from sys import argv
 import simulator
+from datetime import datetime
+
+start = datetime.now()
 
 time_limit = float(argv[1])
 num_of_lines = float(argv[2])
@@ -12,3 +15,5 @@ for probability in argv[5:]:
 simulator.init(time_limit, num_of_lines, lambd, mu, stay_probabilities)
 simulator.run()
 simulator.print_results()
+
+print(datetime.now() - start)
