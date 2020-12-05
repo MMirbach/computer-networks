@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod
 import heapq
 from random import expovariate, uniform
 
@@ -15,19 +14,17 @@ queue_length_time = [] # at index i holds the amount of time the line had i peop
 wait_times = [] # list of the time every vaccinated man waited
 service_times = [] # list of the time it took every man to gat vaccinated
 
-class Event(ABC): # abstract class of a generic event
-    time: int
+class Event: # abstract class of a generic event
     def __init__(self, t):
         self.time = t
     def __lt__(self, other):
         return self.time < other.time
-    @abstractmethod
     def process_event(self):
         pass
 
 class Arrival(Event): # the event of someone arriving to get vaccinated
     def __init__(self, time):
-        super().__init__(time)
+        Event.__init__(self, time)
 
     def process_event(self):
         global waiting, mu, num_of_vaccinated, num_of_gave_up, queue_length_time, previous_event_time
@@ -44,7 +41,7 @@ class Arrival(Event): # the event of someone arriving to get vaccinated
 
 class GetVaccinated(Event):
     def __init__(self, time):
-        super().__init__(time)
+        Event.__init__(self, time)
 
     def process_event(self):
         global waiting, mu
@@ -58,7 +55,7 @@ class GetVaccinated(Event):
 
 class Departure(Event):
     def __init__(self, time):
-        super().__init__(time)
+        Event.__init__(self, time)
 
     def process_event(self):
         global events, queue_length_time, previous_event_time

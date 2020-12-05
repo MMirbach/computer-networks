@@ -1,7 +1,6 @@
 import event
 import heapq
 from random import expovariate
-from statistics import mean
 
 time_limit = 0
 num_types_of_vaccines = 0
@@ -27,15 +26,15 @@ def run():
 
 def print_results():
     global time_limit, num_types_of_vaccines
-    print(event.num_of_vaccinated, end=' ') # Y - number of people who got vaccinated
-    print(event.num_of_gave_up, end=' ') # X - number of people who came and gave up
-    print(event.previous_event_time, end=' ') # T' - the finish time of all events
-    print(event.queue_length_time[0], end=' ') # T0 - the total time the line was empty
+    print(event.num_of_vaccinated), # Y - number of people who got vaccinated
+    print(event.num_of_gave_up), # X - number of people who came and gave up
+    print(event.previous_event_time), # T' - the finish time of all events
+    print(event.queue_length_time[0]), # T0 - the total time the line was empty
     for Ti in event.queue_length_time[1:]:
-        print(Ti/num_types_of_vaccines, end=' ') # Ti - the average time any line had i people in it
-    print(event.queue_length_time[0] / event.previous_event_time, end=' ') # Z0 - the probability of the line being empty
+        print(Ti/num_types_of_vaccines), # Ti - the average time any line had i people in it
+    print(event.queue_length_time[0] / event.previous_event_time), # Z0 - the probability of the line being empty
     for Zi in event.queue_length_time[1:]:
-        print((Zi / event.previous_event_time) / num_types_of_vaccines, end=' ') # Zi - the probability a specific line has i people in it
-    print(mean(event.wait_times), end=' ') # Tw - average waiting time
-    print(mean(event.service_times), end=' ') # Ts - average service time
-    print(event.num_of_vaccinated/time_limit) # T_lambda - average arrival time
+        print((Zi / event.previous_event_time) / num_types_of_vaccines), # Zi - the probability a specific line has i people in it
+    print(sum(event.wait_times) / len(event.wait_times)), # Tw - average waiting time
+    print(sum(event.service_times) / len(event.service_times)), # Ts - average service time
+    print(event.num_of_vaccinated / time_limit) # T_lambda - average arrival time
