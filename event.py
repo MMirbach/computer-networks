@@ -45,8 +45,7 @@ class GetVaccinated(Event):
 
     def process_event(self):
         global waiting, mu, total_wait_time, total_service_time
-        arrival_time = waiting[0] # the man at the front of the line is always the next to be vaccinated
-        total_wait_time += self.time - arrival_time # time this person spent waiting in line
+        total_wait_time += self.time - waiting[0] # time this person spent waiting in line
         service_time = expovariate(mu)
         total_service_time += service_time
         heapq.heappush(events, Departure(self.time + service_time))
@@ -56,7 +55,7 @@ class Departure(Event):
         Event.__init__(self, time)
 
     def process_event(self):
-        global events, queue_length_time, previous_event_time
+        global waiting, events, queue_length_time, previous_event_time
         # the queue had len(waiting) people in it for this amount of time before this person left
         queue_length_time[len(waiting)] += self.time - previous_event_time
         waiting.pop(0)
