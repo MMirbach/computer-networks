@@ -3,10 +3,13 @@ import heapq
 from random import expovariate
 from statistics import mean
 
+T = 0
 
 def init(time_limit, lambd, mu, stay_probabilities):
+    global T
     event.lambd = lambd
     event.mu = mu
+    T = time_limit
     for probability in stay_probabilities:
         event.stay_probabilities.append(probability)
     time = 0
@@ -21,9 +24,10 @@ def run():
         next_event.process_event()
 
 def print_results():
+    global T
     print(event.num_of_vaccinated, event.num_of_gave_up, event.previous_event_time, end=' ')
-    for T in event.queue_length_time:
-        print(T, end=' ')
-    for T in event.queue_length_time:
-        print(T / event.previous_event_time, end=' ')
-    print(mean(event.wait_times), mean(event.service_times), event.num_of_vaccinated)
+    for Ti in event.queue_length_time:
+        print(Ti, end=' ')
+    for Ti in event.queue_length_time:
+        print(Ti / event.previous_event_time, end=' ')
+    print(mean(event.wait_times), mean(event.service_times), event.num_of_vaccinated/T)
