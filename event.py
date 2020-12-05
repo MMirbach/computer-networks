@@ -11,8 +11,8 @@ num_of_vaccinated = 0 # number of people who got vaccinated
 num_of_gave_up = 0 # number of people who came to get vaccinated but gave up because the line was too ling
 previous_event_time = 0 # holds the time the previous event happened
 queue_length_time = [] # at index i holds the amount of time the line had i people in it (including the man being vaccinated)
-wait_times = [] # list of the time every vaccinated man waited
-service_times = [] # list of the time it took every man to gat vaccinated
+total_wait_time = 0 # total time people spent waiting in line 
+total_service_time = 0 # total time people spent getting vaccinated
 
 class Event: # abstract class of a generic event
     def __init__(self, t):
@@ -44,14 +44,12 @@ class GetVaccinated(Event):
         Event.__init__(self, time)
 
     def process_event(self):
-        global waiting, mu
+        global waiting, mu, total_wait_time, total_service_time
         arrival_time = waiting[0] # the man at the front of the line is always the next to be vaccinated
-        wait_time = self.time - arrival_time
-        wait_times.append(wait_time)
+        total_wait_time += self.time - arrival_time # time this person spent waiting in line
         service_time = expovariate(mu)
-        service_times.append(service_time)
-        finish_time = self.time + service_time
-        heapq.heappush(events, Departure(finish_time))
+        total_service_time += service_time
+        heapq.heappush(events, Departure(self.time + service_time))
 
 class Departure(Event):
     def __init__(self, time):

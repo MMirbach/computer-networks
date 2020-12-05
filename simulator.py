@@ -17,7 +17,8 @@ def init(stop_at, num_of_lines, lambd, mu, stay_probabilities):
     time = 0
     while time <= time_limit: # set all the arrival times, they are independent of everything else
         time = time + expovariate(event.lambd)
-        heapq.heappush(event.events, event.Arrival(time))
+        event.events.append(event.Arrival(time))
+    heapq.heapify(event.events)
 
 def run():
     while event.events:
@@ -35,6 +36,6 @@ def print_results():
     print(event.queue_length_time[0] / event.previous_event_time), # Z0 - the probability of the line being empty
     for Zi in event.queue_length_time[1:]:
         print((Zi / event.previous_event_time) / num_types_of_vaccines), # Zi - the probability a specific line has i people in it
-    print(sum(event.wait_times) / len(event.wait_times)), # Tw - average waiting time
-    print(sum(event.service_times) / len(event.service_times)), # Ts - average service time
+    print(event.total_wait_time / event.num_of_vaccinated), # Tw - average waiting time
+    print(event.total_service_time / event.num_of_vaccinated), # Ts - average service time
     print(event.num_of_vaccinated / time_limit) # T_lambda - average arrival time
