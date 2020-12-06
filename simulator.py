@@ -1,7 +1,6 @@
 import event
 from heapq import heapify, heappop
 from random import expovariate
-from datetime import datetime
 
 time_limit = 0
 num_types_of_vaccines = 0
@@ -27,7 +26,6 @@ def run():
 
 def print_results():
     global time_limit, num_types_of_vaccines
-    start = datetime.now()
     results = ""
     # Y - number of people who got vaccinated + X - number of people who came and gave up
     results += str(event.num_of_vaccinated) + " " + str(event.num_of_gave_up) + " "\
@@ -41,6 +39,5 @@ def print_results():
     # Tw - average waiting time + Ts - average service time
     results += str(event.total_wait_time / event.num_of_vaccinated) + " " + str(event.total_service_time / event.num_of_vaccinated)\
                + " " + str(event.num_of_vaccinated / time_limit) # lambda_A - average arrival time
-
     print(results)
-    print(datetime.now() - start)
+               
