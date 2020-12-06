@@ -1,4 +1,4 @@
-import heapq
+from heapq import heappush
 from random import expovariate, uniform
 from collections import deque
 
@@ -34,7 +34,7 @@ class Arrival(Event): # the event of someone arriving to get vaccinated
         if uniform(0,1) < stay_probabilities[len(waiting)]: # check if the man gave up
             num_of_vaccinated += 1
             if not waiting: # no-one is waiting, can be vaccinated right away
-                heapq.heappush(events, GetVaccinated(self.time))
+                heappush(events, GetVaccinated(self.time))
             waiting.append(self.time)
         else:
             num_of_gave_up += 1
@@ -49,7 +49,7 @@ class GetVaccinated(Event):
         total_wait_time += self.time - waiting[0] # time this person spent waiting in line
         service_time = expovariate(mu)
         total_service_time += service_time
-        heapq.heappush(events, Departure(self.time + service_time))
+        heappush(events, Departure(self.time + service_time))
 
 class Departure(Event):
     def __init__(self, time):
@@ -61,5 +61,5 @@ class Departure(Event):
         queue_length_time[len(waiting)] += self.time - previous_event_time
         waiting.popleft()
         if waiting: # there is a next in line
-            heapq.heappush(events, GetVaccinated(self.time))
+            heappush(events, GetVaccinated(self.time))
         previous_event_time = self.time

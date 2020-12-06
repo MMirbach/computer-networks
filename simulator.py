@@ -1,5 +1,5 @@
 import event
-import heapq
+from heapq import heapify, heappop
 from random import expovariate
 
 time_limit = 0
@@ -18,11 +18,11 @@ def init(stop_at, num_of_lines, lambd, mu, stay_probabilities):
     while time <= time_limit: # set all the arrival times, they are independent of everything else
         time = time + expovariate(event.lambd)
         event.events.append(event.Arrival(time))
-    heapq.heapify(event.events)
+    heapify(event.events)
 
 def run():
     while event.events:
-        heapq.heappop(event.events).process_event()
+        heappop(event.events).process_event()
 
 def print_results():
     global time_limit, num_types_of_vaccines
