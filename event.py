@@ -1,12 +1,13 @@
 import heapq
 from random import expovariate, uniform
+from collections import deque
 
 
 lambd = 0 # arrival time parameter
 mu = 0 # vaccination time parameter
 stay_probabilities = [] # at index i is the probability a person will stay if lhe line has i people in it when he arrives
 events = [] # list of events, used as a heap sorted bt time
-waiting = [] # list of people waiting in the line, represented by there time of arrival
+waiting = deque() # list of people waiting in the line, represented by there time of arrival
 num_of_vaccinated = 0 # number of people who got vaccinated
 num_of_gave_up = 0 # number of people who came to get vaccinated but gave up because the line was too ling
 previous_event_time = 0 # holds the time the previous event happened
@@ -58,7 +59,7 @@ class Departure(Event):
         global waiting, events, queue_length_time, previous_event_time
         # the queue had len(waiting) people in it for this amount of time before this person left
         queue_length_time[len(waiting)] += self.time - previous_event_time
-        waiting.pop(0)
+        waiting.popleft()
         if waiting: # there is a next in line
             heapq.heappush(events, GetVaccinated(self.time))
         previous_event_time = self.time
