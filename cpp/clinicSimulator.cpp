@@ -7,7 +7,7 @@
 ClinicSimulator* ClinicSimulator::instance = nullptr;
 
 ClinicSimulator::ClinicSimulator(double time_limit, int num_of_lines, double lambda, double mu, std::vector<double> stay_probabilities) :
-    _time_limit(time_limit) , _num_of_lines(num_of_lines), _lambda(lambda), _mu(mu), _stay_probabilities(stay_probabilities), 
+    _time_limit(time_limit) , _num_of_lines(num_of_lines), _mu(mu), _stay_probabilities(stay_probabilities), 
     _waiting(), _num_of_vaccinated(0), _num_of_gave_up(0), _previous_event_time(0), _queue_length_time(stay_probabilities.size(), 0),
     // the length of line line can be between 0 and len(stay_probabilities) - 1 because the last probability is always 0
     _total_wait_time(0), _total_service_time(0){
@@ -15,7 +15,7 @@ ClinicSimulator::ClinicSimulator(double time_limit, int num_of_lines, double lam
     double time = 0;
     std::vector<Event*> arrivals;
     while (time <= time_limit) { // set all the arrival times, they are independent of everything else
-        time += -( log( ((double)rand() + 1) / (double)RAND_MAX ) / _lambda); // using given formula for exponential distribution
+        time += -( log( ((double)rand() + 1) / (double)RAND_MAX ) / lambda); // using given formula for exponential distribution
         arrivals.push_back(new Arrival(time));
     }
     _events = std::priority_queue<Event*, std::vector<Event*, std::allocator<Event*> >, eventComparator>(eventComparator(), arrivals);

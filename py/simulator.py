@@ -7,7 +7,6 @@ num_types_of_vaccines = 0
 
 def init(stop_at, num_of_lines, lambd, mu, stay_probabilities):
     global time_limit, num_types_of_vaccines
-    event.lambd = lambd
     event.mu = mu
     time_limit = stop_at
     num_types_of_vaccines = num_of_lines
@@ -16,7 +15,7 @@ def init(stop_at, num_of_lines, lambd, mu, stay_probabilities):
     # and len(stay_probabilities)-1 because the last probability is always 0
     time = 0
     while time <= time_limit: # set all the arrival times, they are independent of everything else
-        time = time + expovariate(event.lambd)
+        time = time + event.exponential(lambd)
         event.events.append(event.Arrival(time))
     heapify(event.events)
 

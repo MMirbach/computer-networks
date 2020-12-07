@@ -40,7 +40,6 @@ struct eventComparator {
 class ClinicSimulator {
     const double _time_limit; // time limit given for arrivals
     const int _num_of_lines; // number of lines in the clinic
-    double _lambda; // arrival pace
     double _mu; // service pace
     const std::vector<double> _stay_probabilities; // at index i is the probability a person will stay if lhe line has i people in it when he arrives
     std::priority_queue<Event*, std::vector<Event*, std::allocator<Event*> >, eventComparator> _events; // list of events, used as a priority queue sorted bt time
