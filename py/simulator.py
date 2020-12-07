@@ -30,13 +30,13 @@ def print_results():
     # Y - number of people who got vaccinated + X - number of people who came and gave up
     results += str(event.num_of_vaccinated) + " " + str(event.num_of_gave_up) + " "\
                + str(event.previous_event_time) + " " + str(event.queue_length_time[0]) + " "
-    # T' - the finish time of all events + T0 - the total time the line was empty
+    #           T' - the finish time of all events + T0 - the total time the line was empty
     for Ti in event.queue_length_time[1:]:
         results += str(Ti/num_types_of_vaccines) + " " # Ti - the average time any line had i people in it
     results += str(event.queue_length_time[0] / event.previous_event_time) + " " # Z0 - the probability of the line being empty
     for Zi in event.queue_length_time[1:]:
         results += str((Zi / event.previous_event_time) / num_types_of_vaccines) + " " # Zi - the probability a specific line has i people in it
-    # Tw - average waiting time + Ts - average service time
+    #                        Tw - average waiting time                    +                Ts - average service time
     results += str(event.total_wait_time / event.num_of_vaccinated) + " " + str(event.total_service_time / event.num_of_vaccinated)\
                + " " + str(event.num_of_vaccinated / time_limit) # lambda_A - average arrival time
     print(results)

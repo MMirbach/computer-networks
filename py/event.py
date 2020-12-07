@@ -15,7 +15,7 @@ queue_length_time = [] # at index i holds the amount of time the line had i peop
 total_wait_time = 0 # total time people spent waiting in line 
 total_service_time = 0 # total time people spent getting vaccinated
 
-class Event: # abstract class of a generic event
+class Event: # generic event class
     def __init__(self, t):
         self.time = t
     def __lt__(self, other):
